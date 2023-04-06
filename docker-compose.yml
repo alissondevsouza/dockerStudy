@@ -1,0 +1,23 @@
+version: "3.2"
+services:
+  consumer:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    networks:
+      - teste_integracao
+  rabbitmq:
+    image: rabbitmq:3-management-alpine
+    container_name: 'rabbitmq'
+    ports:
+        - 5672:5672
+        - 15672:15672
+    volumes:
+        - ~/.docker-conf/rabbitmq/data/:/var/lib/rabbitmq/
+        - ~/.docker-conf/rabbitmq/log/:/var/log/rabbitmq
+    networks:
+        - teste_integracao
+
+networks:
+  teste_integracao:
+    driver: bridge
